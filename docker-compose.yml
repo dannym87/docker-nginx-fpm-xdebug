@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  fpm:
+    build:
+      context: .
+      dockerfile: ./docker/fpm/Dockerfile
+    volumes:
+      - .:/var/www/html
+      - ./docker/fpm/conf/xdebug.ini:/usr/local/etc/php/conf.d/99-xdebug.ini
+
+  nginx:
+    image: nginx:1.11-alpine
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8081:80
